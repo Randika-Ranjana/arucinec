@@ -70,50 +70,69 @@ function initScrollProgress() {
   }
 }
 
-// Hamburger Menu Functionality
+
+
+
+ // Hamburger Menu JavaScript
         function initHamburgerMenu() {
             const hamburger = document.getElementById('hamburger-btn');
             const nav = document.getElementById('main-nav');
-            const header = document.getElementById('header');
-
+            
             if (hamburger && nav) {
                 // Toggle menu on hamburger click
                 hamburger.addEventListener('click', (e) => {
                     e.stopPropagation();
                     hamburger.classList.toggle('active');
                     nav.classList.toggle('active');
+                    
+                    // Toggle body scroll when menu is open
+                    if (nav.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = '';
+                    }
                 });
-
+                
                 // Close menu when clicking a navigation link
                 document.querySelectorAll('.main-nav a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        // Update active link
-                        document.querySelectorAll('.main-nav a').forEach(l => l.classList.remove('active'));
-                        e.target.classList.add('active');
-                        
-                        // Close mobile menu
+                    link.addEventListener('click', () => {
                         hamburger.classList.remove('active');
                         nav.classList.remove('active');
+                        document.body.style.overflow = '';
                     });
                 });
-
+                
                 // Close menu when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
                         hamburger.classList.remove('active');
                         nav.classList.remove('active');
+                        document.body.style.overflow = '';
                     }
                 });
-
+                
                 // Close menu on escape key
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') {
                         hamburger.classList.remove('active');
                         nav.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+                
+                // Close menu on window resize if desktop
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 991) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        document.body.style.overflow = '';
                     }
                 });
             }
         }
+
+
+
 
  document.addEventListener('DOMContentLoaded', () => {
     const dynamicText = document.querySelector('.dynamic-text');
